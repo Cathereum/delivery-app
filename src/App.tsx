@@ -1,4 +1,5 @@
 import { Button } from "./components/Button/Button";
+import { Input } from "./components/Input/Input";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <Button size="big" onClick={() => console.log("press btn")}>
         Оформить
       </Button>
+      <Input placeholder="Email" />
     </>
   );
 }
