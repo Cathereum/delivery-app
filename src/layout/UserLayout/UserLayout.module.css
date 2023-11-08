@@ -42,6 +42,13 @@
   color: var(--text-color);
 }
 
+.link:hover {
+  color: var(--primary-color);
+}
+.active {
+  color: var(--primary-color);
+}
+
 .exit {
   margin-top: auto;
   margin-bottom: 30px;
