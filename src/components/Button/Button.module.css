@@ -1,12 +1,25 @@
 .button {
-  border-radius: 6px;
-  border: none;
-  padding: 8px 30px;
   font-family: inherit;
-  font-size: 16px;
   cursor: pointer;
   transition: 0.25s;
+  border: none;
   color: var(--main-color);
+  border-radius: 29px;
+  font-style: normal;
+}
+
+.small {
+  font-size: 16px;
+  font-weight: 400;
+  padding: 10px 25px;
+}
+
+.big {
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 20px 60px;
+  letter-spacing: 1.2px;
 }
 
 .accent {
