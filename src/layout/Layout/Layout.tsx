@@ -1,9 +1,9 @@
 import { NavLink, Outlet } from "react-router-dom";
-import styles from "./UserLayout.module.css";
+import styles from "./Layout.module.css";
 import { Button } from "../../components/Button/Button";
 import cn from "classnames";
 
-export const UserLayout = () => {
+export const Layout = () => {
   return (
     <div className={styles["layout"]}>
       <div className={styles["sidebar"]}>
