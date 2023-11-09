@@ -20,7 +20,7 @@ export const ProductCard: FC<ProductCardProps> = ({
   description,
 }) => {
   return (
-    <Link className={styles["link"]} to={"/"}>
+    <Link className={styles["link"]} to={`/product/${id}`}>
       <div className={styles["card"]}>
         <div
           className={styles["card-header"]}
