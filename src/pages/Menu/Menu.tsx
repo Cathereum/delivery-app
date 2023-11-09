@@ -1,3 +1,5 @@
+import { Headling } from "../../components/Headling/Headling";
+
 export const Menu = () => {
-  return <div>Menu Content</div>;
+  return <Headling>Меню</Headling>;
 };
