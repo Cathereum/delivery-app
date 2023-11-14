@@ -7,8 +7,8 @@ export interface ProductCardProps {
   image: string;
   price: number;
   rating: number;
-  title: string;
-  description: string;
+  name: string;
+  ingredients: string;
 }
 
 export const ProductCard: FC<ProductCardProps> = ({
@@ -16,8 +16,8 @@ export const ProductCard: FC<ProductCardProps> = ({
   image,
   price,
   rating,
-  title,
-  description,
+  name,
+  ingredients,
 }) => {
   return (
     <Link className={styles["link"]} to={`/product/${id}`}>
@@ -39,8 +39,8 @@ export const ProductCard: FC<ProductCardProps> = ({
           </div>
         </div>
         <div className={styles["card-footer"]}>
-          <div className={styles["title"]}>{title}</div>
-          <div className={styles["description"]}>{description}</div>
+          <div className={styles["name"]}>{name}</div>
+          <div className={styles["ingredients"]}>{ingredients}</div>
         </div>
       </div>
     </Link>

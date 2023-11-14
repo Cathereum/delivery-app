@@ -78,13 +78,13 @@
   padding: 12px;
 }
 
-.title {
+.name {
   color: var(--text-color);
   font-size: 18;
   font-style: normal;
   font-weight: 600;
 }
-.description {
+.ingredients {
   color: var(--text-secondary-color);
   font-size: 14px;
   font-style: normal;
