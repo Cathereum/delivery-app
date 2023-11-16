@@ -2,11 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Cart } from "./pages/Cart/Cart";
-import { Product } from "./pages/Product/Product";
+import { ProductPage } from "./pages/ProductPage/ProductPage.tsx";
 import { ErrorPage } from "./pages/ErrorPage/ErrorPage";
 import "./index.css";
 import { Layout } from "./layout/Layout/Layout.tsx";
 import { Menu } from "./pages/Menu/Menu.tsx";
+import axios from "axios";
+import { PREFIX } from "./helpers/API.ts";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/product/:id",
-        element: <Product />,
+        element: <ProductPage />,
+        loader: async ({ params }) => {
+          const { data } = await axios.get(`${PREFIX}/products/${params.id}`);
+          return data;
+        },
       },
     ],
   },
