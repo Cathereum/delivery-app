@@ -36,7 +36,7 @@ const router = createBrowserRouter([
         loader: async ({ params }) => {
           return defer({
             data: axios
-              .get(`${PREFIX}/products11/${params.id}`)
+              .get(`${PREFIX}/products/${params.id}`)
               .then((data) => data),
           });
           // const { data } = await axios.get(`${PREFIX}/products/${params.id}`);
