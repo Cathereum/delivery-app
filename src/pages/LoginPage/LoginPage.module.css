@@ -1,0 +1,54 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 324px;
+  gap: 30px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  color: #c4c4c4;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.button {
+  width: 248px;
+  height: 60px;
+  margin-top: 44px;
+}
+
+.form-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-footer a {
+  text-decoration: none;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.form-footer span {
+  color: #5b5b5e;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+}
