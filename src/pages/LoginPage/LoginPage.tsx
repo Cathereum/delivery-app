@@ -41,7 +41,6 @@ export const LoginPage = () => {
         email,
         password,
       });
-      localStorage.setItem("jwt", data.access_token);
       dispatch(userActions.logIn(data.access_token));
       navigate("/");
     } catch (e) {

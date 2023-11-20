@@ -1,11 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { getDataFromStorage } from "../helpers/storage.service";
+
+export const JWT_STORAGE_KEY = "userData";
+
+export interface StorageDataProps {
+  jwt: string | null;
+}
 
 export interface UserState {
   jwt: string | null;
 }
 
 const initialState: UserState = {
-  jwt: null,
+  jwt: getDataFromStorage<StorageDataProps>(JWT_STORAGE_KEY)?.jwt ?? null,
 };
 
 export const userSlice = createSlice({
