@@ -11,13 +11,18 @@ import "./index.css";
 import { AuthLayout } from "./layout/AuthLayout/AuthLayout.tsx";
 import { LoginPage } from "./pages/LoginPage/LoginPage.tsx";
 import { RegisterPage } from "./pages/RegisterPage/RegisterPage.tsx";
+import { RequireAuth } from "./helpers/RequireAuth.tsx";
 
 const Menu = lazy(() => import("./pages/Menu/Menu"));
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <RequireAuth>
+        <Layout />
+      </RequireAuth>
+    ),
     children: [
       {
         path: "/",

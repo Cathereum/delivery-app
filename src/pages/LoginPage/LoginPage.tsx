@@ -69,7 +69,7 @@ export const LoginPage = () => {
       </form>
       <div className={styles["form-footer"]}>
         <span>Нет аккаунта?</span>
-        <Link to={"./auth/register"}>Зарегистрироваться</Link>
+        <Link to={"/auth/register"}>Зарегистрироваться</Link>
       </div>
     </div>
   );
