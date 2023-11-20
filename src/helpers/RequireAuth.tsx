@@ -6,7 +6,7 @@ export interface RequireAuthProps {
 }
 
 export const RequireAuth: FC<RequireAuthProps> = ({ children }) => {
-  const jwt = null;
+  const jwt = localStorage.getItem("jwt");
 
   if (!jwt) {
     return <Navigate to="/auth/login" replace />;

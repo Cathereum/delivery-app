@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
 import { Headling } from "../../components/Headling/Headling";
 import styles from "./LoginPage.module.css";
@@ -6,6 +6,7 @@ import { Input } from "../../components/Input/Input";
 import { FormEvent, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { PREFIX } from "../../helpers/API";
+import { JwtToken } from "../../interfaces/jwt.interface";
 
 export type LoginForm = {
   email: {
@@ -18,6 +19,7 @@ export type LoginForm = {
 
 export const LoginPage = () => {
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const formSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -31,11 +33,12 @@ export const LoginPage = () => {
 
   const sendLogin = async (email: string, password: string) => {
     try {
-      const { data } = await axios.post(`${PREFIX}/auth/login`, {
+      const { data } = await axios.post<JwtToken>(`${PREFIX}/auth/login`, {
         email,
         password,
       });
-      console.log(data);
+      localStorage.setItem("jwt", data.access_token);
+      navigate("/");
     } catch (e) {
       if (e instanceof AxiosError) {
         setError(e.response?.data.message);
