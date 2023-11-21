@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import { JwtToken } from "../interfaces/jwt.interface";
 import { PREFIX } from "../helpers/API";
 import { Profile } from "../interfaces/profile.interface";
+import { RootState } from "./store";
 
 export const JWT_STORAGE_KEY = "userData";
 
@@ -38,19 +39,14 @@ export const logIn = createAsyncThunk(
   }
 );
 
-export const getProfile = createAsyncThunk(
+export const getProfile = createAsyncThunk<Profile, void, { state: RootState }>(
   "user/getProfile",
-  async (params: { jwt: JwtToken }) => {
-    try {
-      const { data } = await axios.get<Profile>(`${PREFIX}/user/profile`, {
-        headers: { Authorization: `Bearer ${params.jwt.access_token}` },
-      });
-      return data;
-    } catch (e) {
-      if (e instanceof AxiosError) {
-        throw new Error(e.response?.data.message);
-      }
-    }
+  async (_, thunkApi) => {
+    const jwt = thunkApi.getState().user.jwt;
+    const { data } = await axios.get<Profile>(`${PREFIX}/user/profile`, {
+      headers: { Authorization: `Bearer ${jwt}` },
+    });
+    return data;
   }
 );
 

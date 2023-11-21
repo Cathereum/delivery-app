@@ -9,21 +9,17 @@ import { useEffect } from "react";
 
 export const Layout = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const jwt = useSelector((state: RootState) => state.user.jwt);
   const profile = useSelector((state: RootState) => state.user.profile);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, [dispatch]);
 
   const LogOut = () => {
     dispatch(userActions.logOut());
     navigate("/auth/login");
   };
-
-  useEffect(() => {
-    if (jwt) {
-      dispatch(getProfile({ jwt: { access_token: jwt } }));
-    }
-  }, [jwt, dispatch]);
 
   return (
     <div className={styles["layout"]}>
