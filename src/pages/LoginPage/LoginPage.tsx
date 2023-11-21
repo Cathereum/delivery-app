@@ -3,10 +3,10 @@ import { Button } from "../../components/Button/Button";
 import { Headling } from "../../components/Headling/Headling";
 import styles from "./LoginPage.module.css";
 import { Input } from "../../components/Input/Input";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import { logIn } from "../../store/user.slice";
+import { logIn, userActions } from "../../store/user.slice";
 
 export type LoginForm = {
   email: {
@@ -18,9 +18,11 @@ export type LoginForm = {
 };
 
 export const LoginPage = () => {
-  const [error, setError] = useState<string | null>(null);
   const dispatch = useDispatch<AppDispatch>();
-  const jwt = useSelector((state: RootState) => state.user.jwt);
+  const { jwt, loginErrorMessage } = useSelector(
+    (state: RootState) => state.user
+  );
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export const LoginPage = () => {
 
   const formSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setError(null);
+    dispatch(userActions.clearLoginError());
     const target = e.target as typeof e.target & LoginForm;
     // const email = target.email.value;
     // const password = target.password.value;
@@ -46,7 +48,9 @@ export const LoginPage = () => {
   return (
     <div className={styles["login"]}>
       <Headling className={styles["title"]}>Вход</Headling>
-      {error && <span className={styles["error-message"]}>{error}</span>}
+      {loginErrorMessage && (
+        <span className={styles["error-message"]}>{loginErrorMessage}</span>
+      )}
       <form className={styles["form"]} onSubmit={formSubmit}>
         <div className={styles["field"]}>
           <label htmlFor="email">Ваш email</label>

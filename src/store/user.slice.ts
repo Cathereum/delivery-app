@@ -1,6 +1,6 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getDataFromStorage } from "../helpers/storage.service";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { JwtToken } from "../interfaces/jwt.interface";
 import { PREFIX } from "../helpers/API";
 
@@ -12,6 +12,7 @@ export interface StorageDataProps {
 
 export interface UserState {
   jwt: string | null;
+  loginErrorMessage?: string;
 }
 
 const initialState: UserState = {
@@ -21,11 +22,17 @@ const initialState: UserState = {
 export const logIn = createAsyncThunk(
   "user/login",
   async (params: { email: string; password: string }) => {
-    const { data } = await axios.post<JwtToken>(`${PREFIX}/auth/login`, {
-      email: params.email,
-      password: params.password,
-    });
-    return data;
+    try {
+      const { data } = await axios.post<JwtToken>(`${PREFIX}/auth/login`, {
+        email: params.email,
+        password: params.password,
+      });
+      return data;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        throw new Error(e.response?.data.message);
+      }
+    }
   }
 );
 
@@ -36,14 +43,20 @@ export const userSlice = createSlice({
     logOut: (state) => {
       state.jwt = null;
     },
+    clearLoginError: (state) => {
+      state.loginErrorMessage = undefined;
+    },
   },
   extraReducers(builder) {
-    builder.addCase(
-      logIn.fulfilled,
-      (state, action: PayloadAction<JwtToken>) => {
-        state.jwt = action.payload.access_token;
+    builder.addCase(logIn.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return;
       }
-    );
+      state.jwt = action.payload.access_token;
+    });
+    builder.addCase(logIn.rejected, (state, action) => {
+      state.loginErrorMessage = action.error.message;
+    });
   },
 });
 
