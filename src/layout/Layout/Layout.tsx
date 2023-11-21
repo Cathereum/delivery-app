@@ -2,25 +2,36 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import styles from "./Layout.module.css";
 import { Button } from "../../components/Button/Button";
 import cn from "classnames";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
-import { userActions } from "../../store/user.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { getProfile, userActions } from "../../store/user.slice";
+import { useEffect } from "react";
 
 export const Layout = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const jwt = useSelector((state: RootState) => state.user.jwt);
+  const profile = useSelector((state: RootState) => state.user.profile);
+
   const navigate = useNavigate();
 
   const LogOut = () => {
     dispatch(userActions.logOut());
     navigate("/auth/login");
   };
+
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getProfile({ jwt: { access_token: jwt } }));
+    }
+  }, [jwt, dispatch]);
+
   return (
     <div className={styles["layout"]}>
       <div className={styles["sidebar"]}>
         <div className={styles["user"]}>
           <img src="/avatar.svg" alt="avatar-icon" />
-          <div className={styles["user__name"]}>John Golt</div>
-          <div className={styles["user__mail"]}>foodlover@mail.com</div>
+          <div className={styles["user__name"]}>{profile?.name} Golt</div>
+          <div className={styles["user__mail"]}>{profile?.email}</div>
         </div>
         <div className={styles["navigation"]}>
           <NavLink

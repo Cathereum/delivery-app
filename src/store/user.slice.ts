@@ -3,6 +3,7 @@ import { getDataFromStorage } from "../helpers/storage.service";
 import axios, { AxiosError } from "axios";
 import { JwtToken } from "../interfaces/jwt.interface";
 import { PREFIX } from "../helpers/API";
+import { Profile } from "../interfaces/profile.interface";
 
 export const JWT_STORAGE_KEY = "userData";
 
@@ -13,6 +14,7 @@ export interface StorageDataProps {
 export interface UserState {
   jwt: string | null;
   loginErrorMessage?: string;
+  profile?: Profile;
 }
 
 const initialState: UserState = {
@@ -26,6 +28,22 @@ export const logIn = createAsyncThunk(
       const { data } = await axios.post<JwtToken>(`${PREFIX}/auth/login`, {
         email: params.email,
         password: params.password,
+      });
+      return data;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        throw new Error(e.response?.data.message);
+      }
+    }
+  }
+);
+
+export const getProfile = createAsyncThunk(
+  "user/getProfile",
+  async (params: { jwt: JwtToken }) => {
+    try {
+      const { data } = await axios.get<Profile>(`${PREFIX}/user/profile`, {
+        headers: { Authorization: `Bearer ${params.jwt.access_token}` },
       });
       return data;
     } catch (e) {
@@ -56,6 +74,12 @@ export const userSlice = createSlice({
     });
     builder.addCase(logIn.rejected, (state, action) => {
       state.loginErrorMessage = action.error.message;
+    });
+    builder.addCase(getProfile.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return;
+      }
+      state.profile = action.payload;
     });
   },
 });
