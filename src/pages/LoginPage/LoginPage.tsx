@@ -3,13 +3,10 @@ import { Button } from "../../components/Button/Button";
 import { Headling } from "../../components/Headling/Headling";
 import styles from "./LoginPage.module.css";
 import { Input } from "../../components/Input/Input";
-import { FormEvent, useState } from "react";
-import axios, { AxiosError } from "axios";
-import { PREFIX } from "../../helpers/API";
-import { JwtToken } from "../../interfaces/jwt.interface";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
-import { userActions } from "../../store/user.slice";
+import { FormEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
+import { logIn } from "../../store/user.slice";
 
 export type LoginForm = {
   email: {
@@ -22,8 +19,15 @@ export type LoginForm = {
 
 export const LoginPage = () => {
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const jwt = useSelector((state: RootState) => state.user.jwt);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (jwt) {
+      navigate("/");
+    }
+  }, [jwt]);
 
   const formSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -35,19 +39,8 @@ export const LoginPage = () => {
     sendLogin(email.value, password.value);
   };
 
-  const sendLogin = async (email: string, password: string) => {
-    try {
-      const { data } = await axios.post<JwtToken>(`${PREFIX}/auth/login`, {
-        email,
-        password,
-      });
-      dispatch(userActions.logIn(data.access_token));
-      navigate("/");
-    } catch (e) {
-      if (e instanceof AxiosError) {
-        setError(e.response?.data.message);
-      }
-    }
+  const sendLogin = (email: string, password: string) => {
+    dispatch(logIn({ email, password }));
   };
 
   return (
