@@ -62,3 +62,15 @@
   padding: 40px 60px;
   width: 100%;
 }
+
+.cart-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary-color);
+  color: var(--main-color);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 14px;
+}
