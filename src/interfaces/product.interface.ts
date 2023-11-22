@@ -5,4 +5,5 @@ export interface Product {
   ingredients: string[];
   image: string;
   rating: number;
+  count?: number;
 }
