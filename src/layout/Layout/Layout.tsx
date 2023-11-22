@@ -10,6 +10,8 @@ import { useEffect } from "react";
 export const Layout = () => {
   const dispatch = useDispatch<AppDispatch>();
   const profile = useSelector((state: RootState) => state.user.profile);
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,6 +54,7 @@ export const Layout = () => {
             <img src="/cart-icon.svg" alt="cart-icon" />
             Корзина
           </NavLink>
+          {cartItems.reduce((acc, cur) => acc + cur.count, 0)}
         </div>
         <Button onClick={LogOut} className={styles["exit"]}>
           <img src="/logout-icon.svg" alt="logout-icon" />

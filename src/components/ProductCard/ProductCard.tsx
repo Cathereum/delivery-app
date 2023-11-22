@@ -1,6 +1,9 @@
-import { FC } from "react";
+import { FC, MouseEvent } from "react";
 import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { cartActions } from "../../store/cart.slice";
 
 export interface ProductCardProps {
   id: number;
@@ -19,6 +22,12 @@ export const ProductCard: FC<ProductCardProps> = ({
   name,
   ingredients,
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleAddItem = (e: MouseEvent) => {
+    e.preventDefault();
+    dispatch(cartActions.addItem(id));
+  };
   return (
     <Link className={styles["link"]} to={`/product/${id}`}>
       <div className={styles["card"]}>
@@ -30,7 +39,10 @@ export const ProductCard: FC<ProductCardProps> = ({
             {price}&nbsp;
             <span className={styles["rub-symbol"]}>₽</span>
           </div>
-          <button className={styles["add-to-cart-button"]}>
+          <button
+            className={styles["add-to-cart-button"]}
+            onClick={handleAddItem}
+          >
             <img src="add-to-cart-icon.svg" alt="add-to-cart-icon" />
           </button>
           <div className={styles["rating"]}>
