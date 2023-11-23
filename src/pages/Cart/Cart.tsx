@@ -10,13 +10,22 @@ import { Product } from "../../interfaces/product.interface";
 import { PromoCode } from "../../components/PromoCode/PromoCode";
 import { Button } from "../../components/Button/Button";
 
+const DELIVERY_FEE = 169;
+
 export const Cart = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [itemsPrice, setItemsPrice] = useState<number>(0);
   const items = useSelector((state: RootState) => state.cart.items);
 
   useEffect(() => {
     getAllCartProducts();
   }, [items]);
+
+  useEffect(() => {
+    getprice();
+  }, [cartItems]);
+
+  console.log(itemsPrice);
 
   const getProductById = async (id: number, count: number) => {
     const { data } = await axios.get<Product>(`${PREFIX}/products/${id}`);
@@ -31,6 +40,15 @@ export const Cart = () => {
     setCartItems(res);
   };
 
+  const getprice = () => {
+    // Создаем массив сумм
+    const prices = cartItems.map((i) => (i.count ? i.count * i.price : 0));
+    // Суммируем массив сумм
+    const total = prices.reduce((acc, price) => acc + price, 0);
+
+    setItemsPrice(total);
+  };
+
   return (
     <>
       <Headling className={styles["header"]}>Корзина</Headling>
@@ -41,23 +59,24 @@ export const Cart = () => {
           <div className={styles["field"]}>
             <div className={styles["title"]}>Стоимость</div>
             <div className={styles["coast"]}>
-              120 <span>₽</span>
+              {itemsPrice}
+              <span>₽</span>
             </div>
           </div>
           <hr />
           <div className={styles["field"]}>
             <div className={styles["title"]}>Доставка</div>
             <div className={styles["coast"]}>
-              420 <span>₽</span>
+              {DELIVERY_FEE} <span>₽</span>
             </div>
           </div>
           <hr />
           <div className={styles["field"]}>
             <div className={styles["title"]}>
-              Итого <span>(2)</span>
+              Итого <span>({cartItems.length})</span>
             </div>
             <div className={styles["coast"]}>
-              120 <span>₽</span>
+              {DELIVERY_FEE + itemsPrice} <span>₽</span>
             </div>
           </div>
         </div>

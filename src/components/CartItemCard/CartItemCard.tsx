@@ -30,7 +30,7 @@ export const CartItemCard: FC<CartItemCardProps> = ({ cartItem }) => {
       <div className={styles["item-control"]}>
         <button className={styles["button-minus"]} onClick={handleRemoveItem}>
           —
-        </button>{" "}
+        </button>
         <span className={styles["count"]}>{cartItem.count}</span>
         <button className={styles["button-plus"]} onClick={handleAddItem}>
           +
