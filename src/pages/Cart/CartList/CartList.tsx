@@ -10,7 +10,7 @@ export const CartList: FC<CartListProps> = ({ cartItems }) => {
   return (
     <div className={styles["cart-list"]}>
       {cartItems.map((cartItem) => (
-        <CartItemCard cartItem={cartItem} />
+        <CartItemCard key={cartItem.id} cartItem={cartItem} />
       ))}
     </div>
   );

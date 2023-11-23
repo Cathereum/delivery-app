@@ -27,7 +27,22 @@ export const cartSlice = createSlice({
         if (i.id === action.payload) {
           i.count++;
         }
+        return i;
       });
+    },
+    removeItem: (state, action: PayloadAction<number>) => {
+      state.items.map((i) => {
+        if (i.id === action.payload && i.count > 1) {
+          i.count--;
+        }
+        return i;
+      });
+    },
+    deleteItem: (state, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        items: state.items.filter((i) => i.id !== action.payload),
+      };
     },
   },
 });
