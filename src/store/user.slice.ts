@@ -8,10 +8,6 @@ import { RootState } from "./store";
 
 export const JWT_STORAGE_KEY = "userData";
 
-export interface StorageDataProps {
-  jwt: string | null;
-}
-
 export interface UserState {
   jwt: string | null;
   loginErrorMessage?: string;
@@ -20,7 +16,7 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  jwt: getDataFromStorage<StorageDataProps>(JWT_STORAGE_KEY)?.jwt ?? null,
+  jwt: getDataFromStorage<UserState>(JWT_STORAGE_KEY)?.jwt ?? null,
 };
 
 export const logIn = createAsyncThunk(

@@ -1,4 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { getDataFromStorage } from "../helpers/storage.service";
+
+export const USER_CART_STORAGE_KEY = "userCart";
 
 export type CartItem = {
   id: number;
@@ -10,7 +13,7 @@ export interface CartState {
 }
 
 const initialState: CartState = {
-  items: [],
+  items: getDataFromStorage<CartState>(USER_CART_STORAGE_KEY)?.items ?? [],
 };
 
 export const cartSlice = createSlice({
