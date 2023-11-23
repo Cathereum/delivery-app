@@ -1,0 +1,35 @@
+.cart {
+  width: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  margin-bottom: 50px;
+}
+
+.prices {
+  width: 100%;
+}
+
+.prices hr {
+  opacity: 50%;
+}
+.field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 25px 2px 0;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.field span {
+  opacity: 50%;
+}

@@ -1,0 +1,29 @@
+.promo-code {
+  padding: 25px 17px;
+  border-radius: 100px;
+  border: 1px solid #efefef;
+  background: #fcfcfd;
+  min-width: 400px;
+
+  color: #9aa0b4;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+
+  outline: none;
+}
+
+.promo-wrapper {
+  position: relative;
+}
+
+.button {
+  position: absolute;
+  right: 25px;
+  top: 12px;
+
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

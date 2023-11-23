@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { PREFIX } from "../../helpers/API";
 import { Product } from "../../interfaces/product.interface";
+import { PromoCode } from "../../components/PromoCode/PromoCode";
+import { Button } from "../../components/Button/Button";
 
 export const Cart = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
@@ -31,10 +33,36 @@ export const Cart = () => {
 
   return (
     <>
-      <div className={styles["cart-header"]}>
-        <Headling>Корзина</Headling>
+      <Headling className={styles["header"]}>Корзина</Headling>
+      <div className={styles["cart"]}>
+        <CartList cartItems={cartItems} />
+        <PromoCode placeholder="Промокод" />
+        <div className={styles["prices"]}>
+          <div className={styles["field"]}>
+            <div className={styles["title"]}>Стоимость</div>
+            <div className={styles["coast"]}>
+              120 <span>₽</span>
+            </div>
+          </div>
+          <hr />
+          <div className={styles["field"]}>
+            <div className={styles["title"]}>Доставка</div>
+            <div className={styles["coast"]}>
+              420 <span>₽</span>
+            </div>
+          </div>
+          <hr />
+          <div className={styles["field"]}>
+            <div className={styles["title"]}>
+              Итого <span>(2)</span>
+            </div>
+            <div className={styles["coast"]}>
+              120 <span>₽</span>
+            </div>
+          </div>
+        </div>
+        <Button size={"big"}>Офромить</Button>
       </div>
-      <CartList cartItems={cartItems} />
     </>
   );
 };
